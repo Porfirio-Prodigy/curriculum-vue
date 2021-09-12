@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="pt-bt">
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <title>Curriculum</title>
+
+    <!--VUE.JS-->
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+
+    <!--Materialize-->
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+    <!--JSPDF-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.4.1/jspdf.debug.js" integrity="sha384-THVO/sM0mFD9h7dfSndI6TS0PgAGavwKvB5hAxRRvc0o9cPLohB0wb/PTA7LdUHs" crossorigin="anonymous"></script>
+
+</head>
+<body>
+
+    <div id="app">
+        <div class="navbar-fixed">
+            <nav>
+              <div class="nav-wrapper blue-grey darken-4">
+                <a href="#!" class="brand-logo center">Curriculum</a>
+              </div>
+            </nav>
+        </div>
+
+        <div class="row">
+            <div class="col s4 center">
+                <label>Name: </label>
+                <input type="text" v-model="nome"/>
+                <br>
+
+                <label>Endereço:</label>
+                <input type="text" v-model="endereco"/>
+                <br>
+
+                <label>Email:</label>
+                <input type="email" v-model="email"/>
+                <br>
+
+                <label>Telefone:</label>
+                <input type="tel" v-model="telefone" data-mask="(00)00000-0000"/>
+                <br>
+
+                <div class="row">
+                    <div class="col s6">
+                        <label>Idade:</label>
+                        <input type="number" v-model="idade"/>
+                        <br>
+                    </div>
+
+                    <div class="col s6">
+                        <label>Estado Civil:</label>
+                        <input type="text" v-model="estado_civil"/>
+                        <br>
+                    </div>
+                </div>
+
+                <label>Objetivo:</label>
+                <input v-model="objetivo"></input>
+
+                <label>Formação Acadêmica:</label>
+                <input type="text" v-model="texto" v-on:keyup.enter="addformacao()" placeholder="Bacharelado em Sistemas"/>
+
+                <label>Experiência Profissional:</label>
+                <input type="text" v-model="texto2" v-on:keyup.enter="addexperiencia()"/>
+
+                <label>Qualificações e Informações Adicionais:</label>
+                <input type="text" v-model="texto3" v-on:keyup.enter="infoadd()"/>
+            </div>
+
+            <div class="col s6 push-s2 center">
+                <h4><b>{{nome}}</b></h4>
+                <hr>
+                
+                <p>{{endereco}}</p>
+                
+                <div class="row">
+                    <div class="col s6 center">
+                        Telefone: {{telefone}}
+                    </div>
+                    <div class="col s6 center">
+                        E-mail: {{email}}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col s6 center">
+                        idade: {{idade}} anos
+                    </div>
+                    <div class="col s6 center">
+                        Estado Civil: {{estado_civil}}
+                    </div>
+                </div>
+                
+                <br>
+                <h5>Objetivo</h5>
+                <hr>
+                {{objetivo}}
+
+                <br>
+                <h5>Formação Acadêmica</h5>
+                    <hr>
+                    <table class="striped">
+                        <tbody>
+                            <tr v-for="item in formacao">
+                            <td>
+                                {{item}}
+                            </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                
+                <br>
+
+                <div v-if="formacao != '' ">
+                    <button @click="removerform()" class="red darken-2 btn">Remover</button>
+                </div>
+                
+
+                <h5>Experiência Profissional</h5>
+                    <hr>
+                    <table class="striped">
+                        <tbody>
+                            <tr v-for="item2 in experiencia">
+                            <td>
+                                {{item2}}
+                            </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                
+                <br>
+
+                <div v-if="experiencia != '' ">
+                    <button @click="removerexp()" class="red darken-2 btn">Remover</button>
+                </div>
+                
+
+                <h5>Qualificações e Informações Adicionais</h5>
+                    <hr>
+                    <table class="striped">
+                        <tbody>
+                            <tr v-for="item3 in information">
+                            <td>
+                                {{item3}}
+                            </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                
+                <br>
+
+                <div v-if="information != '' ">
+                    <button @click="removeinfo()" class="red darken-2 btn">Remover</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="row" style="margin-top: 50px;">
+            <div class="col s12 center">
+                <button class="btn" @click="salvando()">
+                    Salvar
+                </button>
+            </div>
+        </div>
+        
+    </div>
+
+    <script description="Vue.js">
+        new Vue({
+            el: '#app',
+                        
+            data: {
+                nome: 'Nome completo',
+                endereco: 'Rua, Nº, Bairro, Cidade, Estado',
+                email: 'fulanodetal@email.com',
+                telefone: '(00) 00000-0000',
+                estado_civil: 'Solteiro',
+                idade: 0,
+                texto: '',
+                texto2: '',
+                texto3: '',
+                objetivo: 'Desenvolvedor Web',
+                formacao: [],
+                experiencia: [],
+                information: [],
+            },
+
+            methods: {
+                addformacao() {
+                    this.formacao.push(this.texto);
+                    this.texto = '';
+                },
+                removerform() {
+                    this.formacao.pop();
+                },
+
+                addexperiencia() {
+                    this.experiencia.push(this.texto2);
+                    this.texto2 = '';
+                },
+                removerexp(){
+                    this.experiencia.pop();
+                },
+
+                infoadd(){
+                    this.information.push(this.texto3);
+                    this.texto3 = '';
+                },
+                removeinfo() {
+                    this.information.pop();
+                },
+                salvando() {
+                    let doc = new jsPDF()
+                    console.log('salvando Arquivo');
+
+                    //nome
+                    doc.setFontType("bold");
+                    doc.setFontSize(36);
+                    doc.text(this.nome, 15, 20);
+
+                    //informações pessoais
+                    doc.setFontType("normal");
+                    doc.setFontSize(12);
+                    
+                    doc.text(this.endereco, 15, 30);
+
+                    doc.text("Telefone: "+this.telefone+"   E-mail: "+this.email+"   Estado Civil: "+this.estado_civil+
+                    "  idade: "+this.idade+" anos", 15, 40);
+
+                    doc.text("__________________________________________________________________________________", 10, 45 );
+                    
+                    doc.setFontSize(16);
+                    doc.text("OBJETIVO", 15, 55);
+                    doc.setFontSize(12);
+                    doc.text(this.objetivo, 15, 65)
+
+                    doc.setFontSize(16);
+                    doc.text("FORMAÇÃO ACADÊMICA", 15,75);
+
+                    doc.setFontSize(12);
+                    x = 85;
+                    for (i in this.formacao){
+                        doc.text("-"+this.formacao[i], 15,x);
+                        x+=7; 
+                    }
+
+                    x+=10
+                    
+                    doc.setFontSize(16);
+                    doc.text("EXPERIÊNCIAL PROFISSIONAL", 15,x);
+
+                    x+=10
+                    doc.setFontSize(12);
+                    for (i in this.experiencia){
+                        doc.text("-"+this.experiencia[i], 15,x);
+                        x+=7; 
+                    }
+
+                    x+=10
+                    
+                    doc.setFontSize(16);
+                    doc.text("QUALIFICAÇÕES E INFORMAÇÕES ADICIONAIS", 15, x);
+
+                    x+=10
+                    doc.setFontSize(12);
+                    for (i in this.information){
+                        doc.text("-"+this.information[i], 15,x);
+                        x+=7; 
+                    }
+
+                    doc.save(this.nome+'.pdf');   
+                }
+
+            },
+
+        })
+    </script>
+
+</body>
+</html>
