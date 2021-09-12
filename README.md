@@ -5,6 +5,7 @@
 	🚧 Curriculum Vue 🚀 Em construção...  🚧
 </h4>
 
+<div align="center">
 <h3 align="center">Tecnologias usadas</h3>
 <!--tecnologias-->
 <a href="https://vuejs.org/">Vue.js</a><br>
@@ -18,3 +19,4 @@
 <a href="https://www.w3schools.com/css/default.asp">CSS</a><br>
 <a href="https://www.w3schools.com/js/default.asp">JAVASCRIPT</a><br>
 <!---->
+</div>
