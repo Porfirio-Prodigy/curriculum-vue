@@ -1,4 +1,4 @@
-<h1>Curriculum Vue</h1> 
+<h1 align="center">Curriculum Vue</h1> 
 <p align="center">Gerador de curriculo automático desenvolvido em vue.js</p>
 
 <h4 align="center"> 
