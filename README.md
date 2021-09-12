@@ -9,7 +9,7 @@
 <h3 align="center">Tecnologias usadas</h3>
 <!--tecnologias-->
 <a href="https://vuejs.org/">Vue.js</a><br>
-<a href="https://materializecss.com/"><Materialize</a><br>
+<a href="https://materializecss.com/">Materialize</a><br>
 <a href="https://parall.ax/products/jspdf">jsPDF</a><br>
 
 <!---->
