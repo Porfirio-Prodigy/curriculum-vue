@@ -6,7 +6,6 @@
 </h4>
 
 <h3 align="center">Tecnologias usadas<h3>
-=================
 <!--tecnologias-->
    *  [Vue.js](https://vuejs.org/)
    *  [materialize](https://materializecss.com/)
